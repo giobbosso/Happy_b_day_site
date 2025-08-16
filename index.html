@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bonne Fête!</title>
+  <meta name="description" content="Pagina rapida per festa a tema francese" />
+  <style>
+    :root{
+      --bg:#0e0f13;
+      --card:#141622;
+      --accent:#2dd4bf;
+      --text:#e6e8ef;
+      --muted:#a6accd;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 1200px at 80% 20%, rgba(45,212,191,.08), transparent 60%),
+                  radial-gradient(900px 900px at 10% 80%, rgba(147,197,253,.08), transparent 60%),
+                  var(--bg);
+      overflow-x:hidden;
+    }/* FLOATING EMOJI BACKGROUND */
+.floaters{position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0}
+.floater{position:absolute; font-size:clamp(24px, 4vw, 48px); opacity:.18; filter: blur(.2px);}
+@keyframes drift {
+  from { transform: translateY(110vh) rotate(0deg); }
+  to   { transform: translateY(-20vh) rotate(360deg); }
+}
+
+/* CARD */
+.wrap{position:relative; z-index:1; min-height:100%; display:grid; place-items:center; padding:24px}
+.card{
+  width:min(900px, 92vw);
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  backdrop-filter: blur(8px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px; box-shadow:var(--shadow);
+  padding:28px; text-align:center;
+}
+h1{margin:.2rem 0 0; font-size:clamp(28px, 5vw, 48px); letter-spacing:.5px}
+p.lead{margin:.3rem 0 1rem; color:var(--muted)}
+
+/* PHOTO + ORBITING ITEMS */
+.stage{position:relative; width:min(360px, 70vw); aspect-ratio:1/1; margin:20px auto 6px}
+.photo{
+  position:absolute; inset:0;
+  border-radius:50%; overflow:hidden; border:3px solid rgba(255,255,255,.12);
+  box-shadow: 0 8px 30px rgba(0,0,0,.4);
+  background:#222 center/cover no-repeat url('./image.jpg');
+}
+.orbit{position:absolute; inset:-20px; border-radius:50%; animation: spin 9s linear infinite;}
+.orbit.slow{animation-duration: 14s}
+@keyframes spin { to { transform: rotate(360deg) } }
+.orbit-item{position:absolute; left:50%; top:0; transform: translate(-50%, -40%);}
+
+/* Mustache SVG stuck to face */
+.mustache{
+  position:absolute; left:50%; bottom:26%; transform: translateX(-50%);
+  width:48%; max-width:200px; opacity:.95; filter: drop-shadow(0 2px 2px rgba(0,0,0,.45));
+}
+
+/* Audio */
+.audio{
+  display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap;
+  padding:14px; border-radius:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+}
+.btn{
+  appearance:none; border:none; cursor:pointer; border-radius:999px; padding:12px 18px; font-weight:600;
+  background:linear-gradient(135deg, #3b82f6, #2dd4bf); color:white; box-shadow:var(--shadow);
+  transition: transform .12s ease; font-size:16px;
+}
+.btn:active{ transform: scale(.98) }
+
+.badges{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:10px}
+.badge{padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); font-size:14px}
+
+footer{margin-top:18px; font-size:12px; color:var(--muted)}
+
+/* Small screens */
+@media (max-width:480px){ .audio{padding:10px} }
+
+  </style>
+</head>
+<body>
+  <!-- Floating background emojis -->
+  <div class="floaters" aria-hidden="true" id="floaters"></div>  <div class="wrap">
+    <div class="card">
+      <h1>Bonne Fête, Monsieur!</h1>
+      <p class="lead">Baffi perfetti, baguette che ruota 🥖 e vibrazioni très françaises 🇫🇷</p><div class="stage">
+    <div class="photo" title="Sostituisci image.jpg con la foto del festeggiato"></div>
+
+    <!-- orbiting baguette and beret as SVG/emoji -->
+    <div class="orbit">
+      <div class="orbit-item" style="font-size:42px">🥖</div>
+    </div>
+    <div class="orbit slow">
+      <div class="orbit-item" style="font-size:40px">🎩</div>
+    </div>
+
+    <!-- moustache overlay (SVG) -->
+    <svg class="mustache" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M300 110c60-60 140-40 190-10-40-8-82 5-110 30 35 3 69 22 92 50-52 0-94-17-121-43-8 7-22 12-51 12s-43-5-51-12c-27 26-69 43-121 43 23-28 57-47 92-50-28-25-70-38-110-30 50-30 130-50 190 10z" fill="#0b0910"/>
+    </svg>
+  </div>
+
+  <div class="audio">
+    <button class="btn" id="playBtn">▶︎ Play</button>
+    <audio id="player" src="./music.mp3"></audio>
+    <span style="opacity:.8">Musica: chanson française</span>
+  </div>
+
+  <div class="badges">
+    <span class="badge">🗼 Tour Eiffel</span>
+    <span class="badge">🥐 Croissant</span>
+    <span class="badge">🍷 Bordeaux</span>
+    <span class="badge">🎶 Musette</span>
+  </div>
+
+  <footer>
+    Suggerimento: rinomina <code>image.jpg</code> con la foto del festeggiato e <code>music.mp3</code> con un brano libero da diritti.
+  </footer>
+</div>
+
+  </div>  <script>
+    // Floating background symbol generator
+    const symbols = ["🇫🇷","🗼","🥐","🥖","🎨","🎶","🎺","🍷","🧀","🎩","🌙"]; // French vibes
+    const floaters = document.getElementById('floaters');
+    for(let i=0;i<36;i++){
+      const span=document.createElement('span');
+      span.className='floater';
+      span.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      const left = Math.random()*100; // vw
+      const delay = Math.random()*-20; // s (negative so they are desynced)
+      const dur = 18 + Math.random()*20; // s
+      span.style.left = left+"vw";
+      span.style.animation = `drift ${dur}s linear infinite`;
+      span.style.animationDelay = `${delay}s`;
+      floaters.appendChild(span);
+    }
+
+    // Audio: click to play/pause (autoplay is often blocked on mobile)
+    const btn = document.getElementById('playBtn');
+    const player = document.getElementById('player');
+    let playing=false;
+    btn.addEventListener('click', async ()=>{
+      try{
+        if(!playing){
+          await player.play();
+          btn.textContent='⏸︎ Pause';
+          playing=true;
+        } else {
+          player.pause();
+          btn.textContent='▶︎ Play';
+          playing=false;
+        }
+      }catch(e){
+        alert('Tocca di nuovo per avviare la musica (blocco autoplay del browser).');
+      }
+    });
+  </script></body>
+</html>
